@@ -1,0 +1,5 @@
+/* e.g. to tweak colors/font */
+.navbar-default .navbar-brand,
+.navbar-default .nav > li > a {
+  color: #555;
+}
