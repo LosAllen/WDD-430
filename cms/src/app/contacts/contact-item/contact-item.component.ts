@@ -2,12 +2,12 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-contact-detail',
+  selector: 'app-contact-item',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './contact-detail.component.html',
-  styleUrls: ['./contact-detail.component.css']
+  templateUrl: './contact-item.component.html',
+  styleUrls: ['./contact-item.component.css']
 })
-export class ContactDetailComponent {
+export class ContactItemComponent {
   @Input() contact: any;
 }
