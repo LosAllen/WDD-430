@@ -21,6 +21,8 @@ import { ContactListComponent } from './contacts/contact-list/contact-list.compo
 import { ContactItemComponent } from './contacts/contact-item/contact-item.component';
 import { ContactDetailComponent } from './contacts/contact-detail/contact-detail.component';
 
+import { DropdownDirective }     from './shared/dropdown.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +44,8 @@ import { ContactDetailComponent } from './contacts/contact-detail/contact-detail
     ContactListComponent,
     ContactItemComponent,
     ContactDetailComponent,
+    
+    DropdownDirective
   ],
   imports: [
     BrowserModule,
