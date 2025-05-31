@@ -1,30 +1,31 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Document } from '../document.model';
 import { DocumentItemComponent } from '../document-item/document-item.component';
 import { DocumentService }      from '../document.service';
 
+
 @Component({
+  imports: [CommonModule, DocumentItemComponent, RouterModule],
   selector: 'app-document-list',
   standalone: true,
-  imports: [
-    CommonModule, 
-    DocumentItemComponent
-  ],
   templateUrl: './document-list.component.html',
   styleUrls: ['./document-list.component.css']
 })
 
-export class DocumentListComponent {
+export class DocumentListComponent implements OnInit {
   documents: Document[] = [];
 
-  constructor(private docService: DocumentService) {}
+  constructor(private documentService: DocumentService) {}
 
   ngOnInit() {
-    this.documents = this.docService.getDocuments();
-  }
+    // 1) load the initial list
+    this.documents = this.documentService.getDocuments();
 
-  onSelectedDocument(doc: Document) {
-    this.docService.documentSelectedEvent.emit(doc);
+    // 2) subscribe so that we refresh if the array ever changes
+    this.documentService.documentChangedEvent.subscribe(
+      (docs: Document[]) => (this.documents = docs)
+    );
   }
 }

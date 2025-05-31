@@ -10,8 +10,10 @@
         <div class="col-xs-12">
           <!-- updated selectors here -->
           <app-message-item
-            *ngFor="let msg of messages"
-            [message]="msg">
+            *ngFor="let m of messages"
+            [message]="m"
+            [routerLink]="['/messages', m.id]"
+            routerLinkActive="active">
           </app-message-item>
         </div>
       </div>

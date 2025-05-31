@@ -1,21 +1,14 @@
-import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Component } from '@angular/core';
 import { DropdownDirective } from './shared/dropdown.directive';
 
+
 @Component({
+  imports: [CommonModule, DropdownDirective, RouterModule],
   selector: 'app-header',
   standalone: true,
-  imports: [
-    CommonModule,
-    DropdownDirective
-  ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
-  @Output() selectedFeatureEvent = new EventEmitter<string>();
-
-  onSelected(feature: string) {
-    this.selectedFeatureEvent.emit(feature);
-  }
-}
+export class HeaderComponent {}

@@ -1,10 +1,12 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Component, Input } from '@angular/core';
+
 
 @Component({
+  imports: [CommonModule, RouterModule],
   selector: 'app-contact-item',
   standalone: true,
-  imports: [CommonModule],
   templateUrl: './contact-item.component.html',
   styleUrls: ['./contact-item.component.css']
 })

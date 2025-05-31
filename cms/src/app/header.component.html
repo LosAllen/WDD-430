@@ -1,18 +1,18 @@
 <nav class="navbar navbar-dark bg-dark fixed-top">
   <div class="container">
-    <a class="navbar-brand" href="#" (click)="onSelected('documents')">
+    <a class="navbar-brand" [routerLink]="['/documents']">
       WeLearn CMS
     </a>
 
     <ul class="nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="onSelected('documents')">Documents</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/documents']">Documents</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="onSelected('messages')">Messages</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/messages']">Messages</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="onSelected('contacts')">Contacts</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/contacts']">Contacts</a>
       </li>
 
       <li class="nav-item dropdown" appDropdown>

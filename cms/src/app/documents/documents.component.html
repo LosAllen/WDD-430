@@ -1,11 +1,13 @@
 <div class="row">
-  <div class="col-md-7">
+  <!-- Left side: always show the list -->
+  <div class="col-md-5">
+    <!-- When you’re at /documents or any child route under /documents, 
+         Angular will still render DocumentListComponent in this outlet. -->
     <app-document-list></app-document-list>
   </div>
-  <div class="col-md-5">
-    <app-document-detail
-      *ngIf="selectedDocument"
-      [document]="selectedDocument">
-    </app-document-detail>
+
+  <!-- Right side: either blank, or show detail/edit, depending on child route -->
+  <div class="col-md-4">
+    <router-outlet></router-outlet>
   </div>
 </div>

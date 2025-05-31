@@ -1,14 +1,18 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Documents</h3>
-    <button class="btn btn-success pull-right">Add Document</button>
+    <a class="btn btn-success pull-right" 
+      [routerLink]="['/documents', 'new']">
+      Add Document
+    </a>
   </div>
   <div class="panel-body">
     <div class="list-group">
       <app-document-item
         *ngFor="let doc of documents"
         [document]="doc"
-        (click)="onSelectedDocument(doc)">
+        [routerLink]="['/documents', doc.id]" 
+        routerLinkActive="active">
       </app-document-item>
     </div>
   </div>

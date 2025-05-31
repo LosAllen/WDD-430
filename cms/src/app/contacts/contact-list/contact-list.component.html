@@ -2,16 +2,15 @@
   <div class="panel-heading">
     <div class="row pad-left-right">
       <span class="title pull-left">Contacts</span>
-      <a class="btn btn-success pull-right">New Contact</a>
+      <a class="btn btn-success pull-right" [routerLink]="['/contacts', 'new']">New Contact</a>
     </div>
   </div>
   <div class="panel-body">
-    <div class="list-group">
-      <app-contact-item
-        *ngFor="let contact of contacts"
-        [contact]="contact"
-        (click)="onSelected(contact)">
-      </app-contact-item>
-    </div>
+    <app-contact-item
+      *ngFor="let c of contacts"
+      [contact]="c"
+      [routerLink]="['/contacts', c.id]"
+      routerLinkActive="active">
+    </app-contact-item>
   </div>
 </div>

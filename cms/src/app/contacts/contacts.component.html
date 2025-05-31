@@ -1,13 +1,10 @@
 <div class="row">
-  <!-- Left column: the list -->
   <div class="col-md-5">
+    <!-- List outlet -->
     <app-contact-list></app-contact-list>
   </div>
-
-  <!-- Right column: detail (only when a contact is selected) -->
-  <div class="col-md-7" *ngIf="selectedContact">
-    <app-contact-detail
-      [contact]="selectedContact">
-    </app-contact-detail>
+  <div class="col-md-4">
+    <!-- Detail/Edit outlet -->
+    <router-outlet></router-outlet>
   </div>
 </div>

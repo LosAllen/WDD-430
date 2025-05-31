@@ -1,5 +1,6 @@
-import { Component, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Component, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Message } from '../message.model';
 import { MessageService }                   from '../message.service';
 
