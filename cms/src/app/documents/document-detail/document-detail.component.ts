@@ -9,7 +9,7 @@ import { DocumentService }          from '../document.service';
 @Component({
   selector: 'app-document-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './document-detail.component.html',
   styleUrls: ['./document-detail.component.css']
 })
@@ -35,10 +35,11 @@ export class DocumentDetailComponent implements OnInit {
   }
 
   onDelete() {
+    if (!this.document) return;
     this.documentService.deleteDocument(this.document);
-    // After deletion, navigate “up” to /documents
     this.router.navigate(['/documents']);
   }
+
 
   onView() {
     // If service injected a window ref, open a new tab

@@ -1,16 +1,11 @@
-<div class="panel panel-default" *ngIf="document">
-  <div class="panel-heading">
-    <h3>{{ document.name }}</h3>
+<div *ngIf="document" class="card">
+  <div class="card-header">
+    <h2>{{ document.name }}</h2>
   </div>
-  <div class="panel-body">
+  <div class="card-body">
     <p><strong>Description:</strong> {{ document.description }}</p>
-    <p><strong>URL:</strong>
-      <a [href]="document.url" target="_blank">{{ document.url }}</a>
-    </p>
-  </div>
-  <div class="panel-footer">
-    <button class="btn btn-primary">View</button>
-    <button class="btn btn-info">Edit</button>
-    <button class="btn btn-danger">Delete</button>
+    <p><strong>URL:</strong> <a [href]="document.url" target="_blank">{{ document.url }}</a></p>
+    <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+    <a [routerLink]="['/documents', document.id, 'edit']" class="btn btn-primary">Edit</a>
   </div>
 </div>

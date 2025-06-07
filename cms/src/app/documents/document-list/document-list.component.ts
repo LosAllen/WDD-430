@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Document } from '../document.model';
 import { DocumentItemComponent } from '../document-item/document-item.component';
 import { DocumentService }      from '../document.service';
-
+import { Subscription } from 'rxjs';
 
 @Component({
   imports: [CommonModule, DocumentItemComponent, RouterModule],
@@ -14,18 +14,22 @@ import { DocumentService }      from '../document.service';
   styleUrls: ['./document-list.component.css']
 })
 
-export class DocumentListComponent implements OnInit {
+export class DocumentListComponent implements OnInit, OnDestroy {
   documents: Document[] = [];
+  private subscription!: Subscription;
 
   constructor(private documentService: DocumentService) {}
 
-  ngOnInit() {
-    // 1) load the initial list
+  ngOnInit(): void {
     this.documents = this.documentService.getDocuments();
-
-    // 2) subscribe so that we refresh if the array ever changes
-    this.documentService.documentChangedEvent.subscribe(
-      (docs: Document[]) => (this.documents = docs)
+    this.subscription = this.documentService.documentListChangedEvent.subscribe(
+      (documentsList: Document[]) => {
+        this.documents = documentsList;
+      }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

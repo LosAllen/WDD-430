@@ -8,7 +8,7 @@ import { ContactService } from '../contact.service';
 @Component({
   selector: 'app-contact-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './contact-detail.component.html',
   styleUrls: ['./contact-detail.component.css']
 })
@@ -38,7 +38,9 @@ export class ContactDetailComponent implements OnInit {
   }
 
   onDelete() {
+    if (!this.contact) return;
     this.contactService.deleteContact(this.contact);
     this.router.navigate(['/contacts']);
   }
+
 }
