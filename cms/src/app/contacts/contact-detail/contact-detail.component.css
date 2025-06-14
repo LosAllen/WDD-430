@@ -1,0 +1,8 @@
+.team-member {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.team-member img.thumb-sm {
+  margin-right: 8px;
+}

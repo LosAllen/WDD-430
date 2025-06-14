@@ -1,49 +1,55 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule }      from '@angular/core';
+import { FormsModule }     from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';    
-
-import { AppRoutingModule }   from './app-routing.module';
-
+import { CommonModule } from '@angular/common';
 import { AppComponent }      from './app.component';
-// Removed HeaderComponent   from './header.component';
+import { HeaderComponent }   from './header.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { routes } from './app.routes';
 
-// Removed DocumentsComponent      from './documents/documents.component';
-// Removed DocumentListComponent   from './documents/document-list/document-list.component';
-// Removed DocumentItemComponent   from './documents/document-item/document-item.component';
-// Removed DocumentDetailComponent from './documents/document-detail/document-detail.component';
-// Removed DocumentEditComponent   from './documents/document-edit/document-edit.component';
+import { DocumentsComponent }      from './documents/documents.component';
+import { DocumentListComponent }   from './documents/document-list/document-list.component';
+import { DocumentItemComponent }   from './documents/document-item/document-item.component';
+import { DocumentDetailComponent } from './documents/document-detail/document-detail.component';
 
-// Removed MessageListComponent from './messages/message-list/message-list.component';
-// Removed MessageItemComponent from './messages/message-item/message-item.component';
-// Removed MessageEditComponent from './messages/message-edit/message-edit.component';
+import { MessageListComponent } from './messages/message-list/message-list.component';
+import { MessageItemComponent } from './messages/message-item/message-item.component';
+import { MessageEditComponent } from './messages/message-edit/message-edit.component';
 
-// Removed ContactsComponent    from './contacts/contacts.component';
-// Removed ContactListComponent from './contacts/contact-list/contact-list.component';
-// Removed ContactItemComponent from './contacts/contact-item/contact-item.component';
-// Removed ContactDetailComponent from './contacts/contact-detail/contact-detail.component';
-// Removed ContactEditComponent   from './contacts/contact-edit/contact-edit.component';
-
-
-import { DropdownDirective }     from './shared/dropdown.directive';
+import { ContactsComponent }    from './contacts/contacts.component';
+import { ContactListComponent } from './contacts/contact-list/contact-list.component';
+import { ContactItemComponent } from './contacts/contact-item/contact-item.component';
+import { ContactDetailComponent } from './contacts/contact-detail/contact-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
 
     // Documents
-    DocumentEditComponent,  
+    DocumentsComponent,
+    DocumentListComponent,
+    DocumentItemComponent,
+    DocumentDetailComponent,
 
     // Messages
+    MessageListComponent,
+    MessageItemComponent,
+    MessageEditComponent,
 
     // Contacts
-    
-    DropdownDirective
+    ContactsComponent,
+    ContactListComponent,
+    ContactItemComponent,
+    ContactDetailComponent,
   ],
   imports: [
     BrowserModule,
     CommonModule,
-    AppRoutingModule
+    FormsModule,
+    RouterModule.forRoot(routes),
+    DragDropModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,16 +1,28 @@
+<!-- src/app/contacts/contact-list/contact-list.component.html -->
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="row pad-left-right">
       <span class="title pull-left">Contacts</span>
-      <a class="btn btn-success pull-right" [routerLink]="['/contacts', 'new']">New Contact</a>
+      <a class="btn btn-success pull-right" [routerLink]="['/contacts','new']">
+        New Contact
+      </a>
     </div>
   </div>
-  <div class="panel-body">
-    <app-contact-item
-      *ngFor="let c of contacts"
-      [contact]="c"
-      [routerLink]="['/contacts', c.id]"
-      routerLinkActive="active">
-    </app-contact-item>
+
+  <div
+    cdkDropList
+    id="contactsList"
+    class="list-group"
+    [cdkDropListData]="contacts"
+    [cdkDropListConnectedTo]="['groupList']">
+    <div
+      *ngFor="let contact of contacts"
+      cdkDrag
+      [cdkDragData]="contact"
+      [routerLink]="['/contacts', contact.id]"
+      routerLinkActive="active"
+      class="list-group-item">
+      <app-contact-item [contact]="contact"></app-contact-item>
+    </div>
   </div>
 </div>

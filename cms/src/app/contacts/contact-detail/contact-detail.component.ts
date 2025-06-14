@@ -13,7 +13,7 @@ import { ContactService } from '../contact.service';
   styleUrls: ['./contact-detail.component.css']
 })
 export class ContactDetailComponent implements OnInit {
-  contact!: Contact;
+  selectedContact!: Contact;
 
   constructor(
     private contactService: ContactService,
@@ -24,12 +24,12 @@ export class ContactDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id = params['id']; 
-      this.contact = this.contactService.getContact(id)!;
+      this.selectedContact = this.contactService.getContact(id)!;
     });
   }
 
   onView() {
-    window.open(this.contact.url, '_blank');
+    window.open(this.selectedContact.url, '_blank');
   }
 
 
@@ -38,8 +38,8 @@ export class ContactDetailComponent implements OnInit {
   }
 
   onDelete() {
-    if (!this.contact) return;
-    this.contactService.deleteContact(this.contact);
+    if (!this.selectedContact) return;
+    this.contactService.deleteContact(this.selectedContact);
     this.router.navigate(['/contacts']);
   }
 

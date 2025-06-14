@@ -1,12 +1,20 @@
-<div *ngIf="contact" class="card">
-  <div class="card-header">
-    <h2>{{ contact.name }}</h2>
+<div *ngIf="selectedContact">
+  <h2>{{ selectedContact.name }}</h2>
+  <img [src]="selectedContact.imageUrl" class="thumb-lg" alt="{{selectedContact.name}}"/>
+  <p>Email: {{ selectedContact.email }}</p>
+  <p>Phone: {{ selectedContact.phone }}</p>
+
+  <h4>Contacts in Team</h4>
+  <div *ngIf="selectedContact.group?.length; else noTeam">
+    <div *ngFor="let m of selectedContact.group" class="team-member">
+      <img [src]="m.imageUrl" class="thumb-sm" alt="{{m.name}}"/>
+      {{ m.name }}
+    </div>
   </div>
-  <div class="card-body">
-    <img [src]="contact.imageUrl" [alt]="contact.name" class="img-thumbnail mb-3" />
-    <p><strong>Email:</strong> {{ contact.email }}</p>
-    <p><strong>Phone:</strong> {{ contact.phone }}</p>
-    <button class="btn btn-danger" (click)="onDelete()">Delete</button>
-    <a [routerLink]="['/contacts', contact.id, 'edit']" class="btn btn-primary">Edit</a>
-  </div>
+  <ng-template #noTeam>
+    <p><em>No team members.</em></p>
+  </ng-template>
+
+  <button class="btn btn-primary" (click)="onEdit()">Edit</button>
+  <button class="btn btn-danger"  (click)="onDelete()">Delete</button>
 </div>
