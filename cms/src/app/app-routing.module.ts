@@ -24,7 +24,6 @@ const appRoutes: Routes = [
     path: 'documents', 
     component: DocumentsComponent,
     children: [
-      { path: '',           component: DocumentListComponent },
       { path: 'new',        component: DocumentEditComponent },
       { path: ':id',        component: DocumentDetailComponent },
       { path: ':id/edit',   component: DocumentEditComponent }
@@ -43,7 +42,6 @@ const appRoutes: Routes = [
   {
     path: 'contacts', component: ContactsComponent,
     children: [
-        { path: '',        component: ContactListComponent },
         { path: 'new',     component: ContactEditComponent },
         { path: ':id',     component: ContactDetailComponent },
         { path: ':id/edit', component: ContactEditComponent }

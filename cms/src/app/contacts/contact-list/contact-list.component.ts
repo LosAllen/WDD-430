@@ -6,10 +6,11 @@ import { Contact } from '../contact.model';
 import { ContactService }    from '../contact.service';
 import { Subscription } from 'rxjs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ContactsFilterPipe } from '../contacts-filter.pipe';
 
 
 @Component({
-  imports: [CommonModule, ContactItemComponent, RouterModule, DragDropModule],
+  imports: [CommonModule, ContactItemComponent, RouterModule, DragDropModule, ContactsFilterPipe ],
   selector: 'app-contact-list',
   standalone: true,
   templateUrl: './contact-list.component.html',
@@ -17,21 +18,25 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 })
 export class ContactListComponent implements OnInit, OnDestroy {
   contacts: Contact[] = [];
-  private subscription!: Subscription;
+  term: string = '';
+  private sub!: Subscription;
 
   constructor(private contactService: ContactService) {}
 
-  ngOnInit(): void {
-    this.contacts = this.contactService.getContacts();
-    this.subscription = this.contactService.contactListChangedEvent.subscribe(
-      (contactsList: Contact[]) => {
-        this.contacts = contactsList;
-      }
-    );
+   ngOnInit() {
+    this.contactService.getContacts();
+    this.sub = this.contactService.contactListChangedEvent
+      .subscribe((contacts: Contact[]) => {
+        this.contacts = contacts;
+      });
+  }
+
+  search(value: string) {
+    this.term = value;
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.sub.unsubscribe();
   }
 
   private sortContactsByTeam() {

@@ -5,6 +5,7 @@ import { MessageItemComponent } from '../message-item/message-item.component';
 import { MessageEditComponent } from '../message-edit/message-edit.component';
 import { Message } from '../message.model';
 import { MessageService }       from '../message.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -16,17 +17,18 @@ import { MessageService }       from '../message.service';
 })
 export class MessageListComponent implements OnInit {
   messages: Message[] = [];
-
+  private sub!: Subscription;
   constructor(private ms: MessageService) {}
 
   ngOnInit() {
-    this.messages = this.ms.getMessages();
-    this.ms.messageChangedEvent.subscribe(
-      (msgs: Message[]) => this.messages = msgs
-    );
+    this.ms.getMessages();
+    this.sub = this.ms.messageListChangedEvent
+      .subscribe((msgs: Message[]) => {
+         this.messages = msgs;
+       });
   }
 
   onAddMessage(msg: Message) {
-    this.ms.addMessage(msg);
+    this.sub.unsubscribe();
   }
 }

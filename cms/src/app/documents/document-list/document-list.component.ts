@@ -16,20 +16,20 @@ import { Subscription } from 'rxjs';
 
 export class DocumentListComponent implements OnInit, OnDestroy {
   documents: Document[] = [];
-  private subscription!: Subscription;
+  private sub!: Subscription;
 
   constructor(private documentService: DocumentService) {}
 
   ngOnInit(): void {
-    this.documents = this.documentService.getDocuments();
-    this.subscription = this.documentService.documentListChangedEvent.subscribe(
-      (documentsList: Document[]) => {
-        this.documents = documentsList;
+    this.documentService.getDocuments();
+    this.sub = this.documentService.documentListChangedEvent
+      .subscribe((docs: Document[]) => {
+        this.documents = docs;
       }
     );
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.sub.unsubscribe();
   }
 }

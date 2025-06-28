@@ -7,6 +7,8 @@ import { AppComponent }      from './app.component';
 import { HeaderComponent }   from './header.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { routes } from './app.routes';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { ContactsFilterPipe } from './contacts/contacts-filter.pipe';
 
 import { DocumentsComponent }      from './documents/documents.component';
 import { DocumentListComponent }   from './documents/document-list/document-list.component';
@@ -26,6 +28,7 @@ import { ContactDetailComponent } from './contacts/contact-detail/contact-detail
   declarations: [
     AppComponent,
     HeaderComponent,
+    ContactsFilterPipe,
 
     // Documents
     DocumentsComponent,
@@ -51,7 +54,9 @@ import { ContactDetailComponent } from './contacts/contact-detail/contact-detail
     RouterModule.forRoot(routes),
     DragDropModule,
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi())
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

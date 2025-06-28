@@ -5,10 +5,11 @@ import { DocumentListComponent } from './document-list/document-list.component';
 import { DocumentDetailComponent } from './document-detail/document-detail.component';
 import { Document } from './document.model';
 import { DocumentService }      from './document.service';
+import { DocumentEditComponent } from './document-edit/document-edit.component';
 
 
 @Component({
-  imports: [CommonModule, DocumentDetailComponent, DocumentListComponent, RouterModule],
+  imports: [CommonModule, DocumentDetailComponent, DocumentListComponent, DocumentEditComponent, RouterModule],
   selector: 'app-documents',
   standalone: true,
   templateUrl: './documents.component.html',

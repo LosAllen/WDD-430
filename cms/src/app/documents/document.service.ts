@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { Document } from './document.model';
 import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
@@ -7,54 +8,74 @@ import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
 export class DocumentService {
   private documents: Document[] = [];
   documentListChangedEvent = new Subject<Document[]>();
-  private maxDocumentId: number;
+  private maxDocumentId = 0;
+  private documentsUrl =
+    'https://ljacms-default-rtdb.firebaseio.com/documents.json';
 
   documentSelected = new Subject<Document>();
 
-  constructor() {
-    this.documents = MOCKDOCUMENTS.slice();
-    this.maxDocumentId = this.getMaxId();
+  constructor(private http: HttpClient) {}
+
+  getDocuments(): void {
+    this.http.get<Document[]>(this.documentsUrl).subscribe(
+      (docs) => {
+        this.documents = docs || [];
+        this.maxDocumentId = this.getMaxId();
+        this.documents.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+        this.documentListChangedEvent.next(this.documents.slice());
+      },
+      (error) => console.error('Documents GET failed', error)
+    );
   }
 
-  getDocuments(): Document[] {
-    return this.documents.slice();
+  storeDocuments(): void {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http
+      .put(
+        this.documentsUrl,
+        JSON.stringify(this.documents),
+        { headers }
+      )
+      .subscribe(() => {
+        this.documentListChangedEvent.next(this.documents.slice());
+      });
   }
 
-  getDocument(id: string): Document | undefined {
-    return this.documents.find(doc => doc.id === id);
+  private getMaxId(): number {
+    return this.documents.reduce((max, d) => {
+      const id = +d.id;
+      return id > max ? id : max;
+    }, 0);
   }
 
-  getMaxId(): number {
-    let maxId = 0;
-    for (const doc of this.documents) {
-      const currentId = parseInt(doc.id, 10);
-      if (currentId > maxId) maxId = currentId;
-    }
-    return maxId;
+  getDocument(id: string): Document | null {
+    return this.documents.find(d => d.id === id) ?? null;
   }
 
-  addDocument(newDoc: Document) {
+  addDocument(newDoc: Document): void {
     if (!newDoc) return;
     this.maxDocumentId++;
     newDoc.id = this.maxDocumentId.toString();
     this.documents.push(newDoc);
-    this.documentListChangedEvent.next(this.documents.slice());
+    this.storeDocuments();
   }
 
-  updateDocument(original: Document, updated: Document) {
-    if (!original || !updated) return;
-    const pos = this.documents.indexOf(original);
-    if (pos < 0) return;
-    updated.id = original.id;
-    this.documents[pos] = updated;
-    this.documentListChangedEvent.next(this.documents.slice());
+  updateDocument(orig: Document, updated: Document): void {
+    if (!orig || !updated) return;
+    const idx = this.documents.findIndex(d => d.id === orig.id);
+    if (idx < 0) return;
+    updated.id = orig.id;
+    this.documents[idx] = updated;
+    this.storeDocuments();
   }
 
-  deleteDocument(doc: Document) {
+  deleteDocument(doc: Document): void {
     if (!doc) return;
-    const pos = this.documents.indexOf(doc);
-    if (pos < 0) return;
-    this.documents.splice(pos, 1);
-    this.documentListChangedEvent.next(this.documents.slice());
+    const idx = this.documents.findIndex(d => d.id === doc.id);
+    if (idx < 0) return;
+    this.documents.splice(idx, 1);
+    this.storeDocuments();
   }
 }
