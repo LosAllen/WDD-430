@@ -10,9 +10,9 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @Component({
-  selector: 'cms-contact-edit',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, DragDropModule],
+  selector: 'cms-contact-edit',
   templateUrl: './contact-edit.component.html',
   styleUrl: './contact-edit.component.css'
 })

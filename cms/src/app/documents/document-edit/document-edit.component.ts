@@ -8,9 +8,9 @@ import { DocumentService } from '../document.service';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'cms-document-edit',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
+  selector: 'cms-document-edit',
   templateUrl: './document-edit.component.html',
   styleUrl: './document-edit.component.css'
 })

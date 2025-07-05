@@ -7,9 +7,9 @@ import { DocumentService }      from '../document.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  imports: [CommonModule, DocumentItemComponent, RouterModule],
-  selector: 'app-document-list',
   standalone: true,
+  imports: [CommonModule, RouterModule, DocumentItemComponent],
+  selector: 'app-document-list',
   templateUrl: './document-list.component.html',
   styleUrls: ['./document-list.component.css']
 })

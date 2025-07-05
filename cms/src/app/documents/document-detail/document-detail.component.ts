@@ -7,9 +7,9 @@ import { Document }                 from '../document.model';
 import { DocumentService }          from '../document.service';
 
 @Component({
-  selector: 'app-document-detail',
   standalone: true,
   imports: [CommonModule, RouterModule],
+  selector: 'app-document-detail',
   templateUrl: './document-detail.component.html',
   styleUrls: ['./document-detail.component.css']
 })

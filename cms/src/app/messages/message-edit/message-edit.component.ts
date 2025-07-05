@@ -5,9 +5,9 @@ import { Message } from '../message.model';
 import { MessageService }                   from '../message.service';
 
 @Component({
-  selector: 'app-message-edit',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
+  selector: 'app-message-edit',
   templateUrl: './message-edit.component.html',
   styleUrls: ['./message-edit.component.css']
 })

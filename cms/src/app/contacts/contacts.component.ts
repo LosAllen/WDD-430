@@ -8,9 +8,9 @@ import { ContactService }    from './contact.service';
 
 
 @Component({
-  imports: [CommonModule, ContactDetailComponent, ContactListComponent, RouterModule],
-  selector: 'app-contacts',
   standalone: true,
+  imports: [CommonModule, RouterModule, ContactListComponent, ContactDetailComponent],
+  selector: 'app-contacts',
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css']
 })

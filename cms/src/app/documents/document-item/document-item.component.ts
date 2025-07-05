@@ -5,9 +5,9 @@ import { Document } from '../document.model';
 
 
 @Component({
+  standalone: true,
   imports: [CommonModule, RouterModule],
   selector: 'app-document-item',
-  standalone: true,
   templateUrl: './document-item.component.html',
   styleUrls: ['./document-item.component.css']
 })

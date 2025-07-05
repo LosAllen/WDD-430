@@ -9,9 +9,9 @@ import { DocumentEditComponent } from './document-edit/document-edit.component';
 
 
 @Component({
-  imports: [CommonModule, DocumentDetailComponent, DocumentListComponent, DocumentEditComponent, RouterModule],
-  selector: 'app-documents',
   standalone: true,
+  imports: [CommonModule, RouterModule, DocumentListComponent, DocumentDetailComponent, DocumentEditComponent],
+  selector: 'app-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.css']
 })

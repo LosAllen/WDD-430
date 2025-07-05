@@ -10,9 +10,9 @@ import { ContactsFilterPipe } from '../contacts-filter.pipe';
 
 
 @Component({
-  imports: [CommonModule, ContactItemComponent, RouterModule, DragDropModule, ContactsFilterPipe ],
-  selector: 'app-contact-list',
   standalone: true,
+  imports: [CommonModule, RouterModule, ContactItemComponent, DragDropModule, ContactsFilterPipe],
+  selector: 'app-contact-list',
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.css']
 })

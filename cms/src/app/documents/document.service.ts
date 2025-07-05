@@ -1,53 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable }    from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { Document } from './document.model';
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
+import { Subject }       from 'rxjs';
+import { environment }   from '../../environments/environment';
+import { Document }      from './document.model';
 
 @Injectable({ providedIn: 'root' })
 export class DocumentService {
-  private documents: Document[] = [];
+  private apiUrl = `${environment.apiUrl}/documents`;
+  documents: Document[] = [];
   documentListChangedEvent = new Subject<Document[]>();
-  private maxDocumentId = 0;
-  private documentsUrl =
-    'https://ljacms-default-rtdb.firebaseio.com/documents.json';
-
   documentSelected = new Subject<Document>();
 
   constructor(private http: HttpClient) {}
 
   getDocuments(): void {
-    this.http.get<Document[]>(this.documentsUrl).subscribe(
-      (docs) => {
-        this.documents = docs || [];
-        this.maxDocumentId = this.getMaxId();
-        this.documents.sort((a, b) =>
-          a.name.localeCompare(b.name)
-        );
-        this.documentListChangedEvent.next(this.documents.slice());
-      },
-      (error) => console.error('Documents GET failed', error)
-    );
-  }
-
-  storeDocuments(): void {
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this.http
-      .put(
-        this.documentsUrl,
-        JSON.stringify(this.documents),
-        { headers }
-      )
-      .subscribe(() => {
-        this.documentListChangedEvent.next(this.documents.slice());
+      .get<{ message: string; documents: Document[] }>(this.apiUrl)
+      .subscribe({
+        next: resp => {
+          this.documents = resp.documents;
+          this.documents.sort((a, b) => a.name.localeCompare(b.name));
+          this.documentListChangedEvent.next(this.documents.slice());
+        },
+        error: err => console.error('GET /documents failed', err)
       });
-  }
-
-  private getMaxId(): number {
-    return this.documents.reduce((max, d) => {
-      const id = +d.id;
-      return id > max ? id : max;
-    }, 0);
   }
 
   getDocument(id: string): Document | null {
@@ -56,26 +32,45 @@ export class DocumentService {
 
   addDocument(newDoc: Document): void {
     if (!newDoc) return;
-    this.maxDocumentId++;
-    newDoc.id = this.maxDocumentId.toString();
-    this.documents.push(newDoc);
-    this.storeDocuments();
+    newDoc.id = '';
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http
+      .post<{ message: string; document: Document }>(this.apiUrl, newDoc, { headers })
+      .subscribe({
+        next: resp => {
+          this.documents.push(resp.document);
+          this.documentListChangedEvent.next(this.documents.slice());
+        },
+        error: err => console.error('POST /documents failed', err)
+      });
   }
 
   updateDocument(orig: Document, updated: Document): void {
     if (!orig || !updated) return;
-    const idx = this.documents.findIndex(d => d.id === orig.id);
-    if (idx < 0) return;
     updated.id = orig.id;
-    this.documents[idx] = updated;
-    this.storeDocuments();
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.http
+      .put(`${this.apiUrl}/${orig.id}`, updated, { headers })
+      .subscribe({
+        next: () => {
+          const ix = this.documents.findIndex(d => d.id === orig.id);
+          this.documents[ix] = updated;
+          this.documentListChangedEvent.next(this.documents.slice());
+        },
+        error: err => console.error('PUT /documents failed', err)
+      });
   }
 
   deleteDocument(doc: Document): void {
     if (!doc) return;
-    const idx = this.documents.findIndex(d => d.id === doc.id);
-    if (idx < 0) return;
-    this.documents.splice(idx, 1);
-    this.storeDocuments();
+    this.http
+      .delete(`${this.apiUrl}/${doc.id}`)
+      .subscribe({
+        next: () => {
+          this.documents = this.documents.filter(d => d.id !== doc.id);
+          this.documentListChangedEvent.next(this.documents.slice());
+        },
+        error: err => console.error('DELETE /documents failed', err)
+      });
   }
 }

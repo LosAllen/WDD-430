@@ -9,9 +9,9 @@ import { Subscription } from 'rxjs';
 
 
 @Component({
-  imports: [CommonModule, MessageEditComponent, MessageItemComponent, RouterModule],
-  selector: 'app-message-list',
   standalone: true,
+  imports: [CommonModule, RouterModule, MessageItemComponent, MessageEditComponent],
+  selector: 'app-message-list',
   templateUrl: './message-list.component.html',
   styleUrls: ['./message-list.component.css']
 })

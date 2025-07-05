@@ -7,9 +7,9 @@ import { Contact } from '../../contacts/contact.model';
 
 
 @Component({
+  standalone: true,
   imports: [CommonModule, RouterModule],
   selector: 'app-message-item',
-  standalone: true,
   templateUrl: './message-item.component.html',
   styleUrls: ['./message-item.component.css']
 })
